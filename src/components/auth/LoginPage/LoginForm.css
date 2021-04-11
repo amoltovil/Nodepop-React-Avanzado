@@ -1,0 +1,17 @@
+.loginForm-field {
+    padding: 10px 0;
+  }
+  
+.loginForm-submit {
+    margin-top: 10px;
+    width: 100%;
+ }
+  
+.loginForm-checkbox label {
+    color: teal;
+    border-bottom-width: 0px; 
+    border-bottom-style:none;
+    /* width: 120px; */
+    height: 80px;
+    text-align: center;
+ } 

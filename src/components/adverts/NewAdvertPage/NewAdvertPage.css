@@ -1,0 +1,82 @@
+.newAdvertPage {
+    display: flex;
+    padding: 10px 15px 0 15px;
+  }
+
+  .newAdvertPage-name {
+    color: teal;
+  }
+
+  .newAdvertPage-container {
+    padding: 30px;
+    margin: 0px;
+    background-color: rgba(204, 241, 210, 0.1);
+  }
+
+  .newAdvertPage-required {
+    color: red;
+    font-size: x-small;
+    font-weight: normal;
+  }
+
+  .newAdvertPage-sale {
+    
+    /* Rounded border */
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    /* border-radius: 9999px; */
+
+    /* Spacing */
+    margin-right: 10px;
+    padding: 4px;
+  }
+
+  .newAdvertPage-title {
+    font-weight: bold;
+    color: teal;
+  }
+  
+  .newAdvertPage-textarea {
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgb(230, 236, 240);
+  }
+  
+  .newAdvertPage-footer {
+    align-items: center;
+    display: flex;
+  }
+  
+  .newAdvertPage-characters {
+    color: rgb(29, 161, 242);
+  }
+  
+  .newAdvertPage-submit {
+    margin-left: auto;
+  }
+  
+  .newAdvertPage-input {
+    /* background-color: transparent; */
+    /* background-color: rgb(245, 250, 248); */
+    background-color: rgb(224, 241, 239);
+    font-size: 20px;
+    height: 36px;
+    outline-style: none;
+    padding: 2px 10px 5px 10px;
+    width: 100%;
+    margin-bottom: 0.6%;
+  }
+
+  .newAdvertPage-label {
+    font-weight: bold;
+    color: teal;
+    /* background-color: rgb(245, 248, 250); */
+    border-bottom-style: solid;
+    /* border-bottom-width: 2px; */
+    border-color: rgb(101, 119, 134);
+    border-radius: 2px;
+    /* color: rgb(101, 119, 134);  */
+    /* display: flex; */
+    flex-direction: column;
+    transition: all 0.2s;
+  }
+
+  

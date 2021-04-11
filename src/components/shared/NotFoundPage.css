@@ -1,0 +1,14 @@
+.notfound {
+    
+    background-image: url('../../assets/pagenotfound.jpeg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:auto; 
+}
+
+.notfound-text {
+    text-align: "center";
+    font-size: 48;
+    font-weight:bold;
+}
+    
