@@ -1,9 +1,14 @@
 # Práctica de Fundamentos de React
 
+Comentarios:
+
 - La ruta de /adverts está accesible en el icono de Nodepop que se encuentra en la barra del header en la parte superior izquierda de la aplicación.
 - La ruta de /adverts/new está accesible mediante el botón de Anuncio que está en la parte superior derecha de la aplicación.
 
+- No está implementado el uso de la ventana modal de confirmación ni el tema de los EXTRAS solicitados.
 
+- En la página AdvertsPage, he añadido un botón que resetea los filtros.
+- Los filtros son inclusivos.
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

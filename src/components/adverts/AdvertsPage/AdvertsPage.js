@@ -134,20 +134,24 @@ const AdvertsPage = ({ className, ...props }) => {
           return (advert.name === filters.name);
         })
       }
-      
-      if (filters.preciomin !== '' && filters.preciomax !== '') {
+     
+      if ((filters.pricemin !== '' && filters.pricemin !== undefined)
+         && (filters.pricemax !== '' && filters.pricemax !== undefined)) {
+       
         advertsByPrice = adverts.filter(advert => {
           return (advert.price >= filters.pricemin && advert.price <= filters.pricemax);
         });
       }
-      else if ((filters.preciomin !== '') &&
+      else if ((filters.pricemin !== '') &&
         (filters.pricemax === '' || filters.pricemax === null || filters.pricemax === undefined)) {
+         
         advertsByPrice = adverts.filter(advert => {
           return (advert.price >= filters.pricemin);
         });
       }
-      else if ((filters.preciomax !== '') &&
+      else if ((filters.pricemax !== '') &&
         (filters.pricemin === '' || filters.pricemin === null || filters.pricemin === undefined)) {
+        
         advertsByPrice = adverts.filter(advert => {
           return (advert.price <= filters.pricemax);
         });
@@ -186,7 +190,7 @@ const AdvertsPage = ({ className, ...props }) => {
         }
         return acc;
       }, []);
-      
+      console.log(result);
       return (result);
     
     }
