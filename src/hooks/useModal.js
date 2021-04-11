@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-const useModal = (initialState) => {
-  const [isVisible, setIsVisible] = useState(initialState);
+const useModal = () => {
+  const [isVisible, setIsVisible] = useState(false);
   
   function toggleModal() {
     setIsVisible(!isVisible);

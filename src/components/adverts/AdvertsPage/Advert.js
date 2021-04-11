@@ -8,7 +8,7 @@ const Advert = ({ createdAt, photo, name, sale, price, tags}) => {
   const handleLike = ev => {
     ev.preventDefault();
     // Manage like/unlike flow
-    console.log(ev);
+    //console.log(ev);
   };
  
   return (
@@ -24,7 +24,7 @@ const Advert = ({ createdAt, photo, name, sale, price, tags}) => {
           </time>
           <span className="advert-separator">·</span>
         <span><time dateTime={createdAt}> Fecha Creación: {createdAt.split("T")[0]}</time></span>
-        <p className="advert-price">Precio: {price}</p>
+        <p className="advert-price">Precio: {price} €</p>
           <span className="advert-sale">Tipo de Anuncio: {sale ? 'Venta' : 'Compra'}</span>
           <p className="advert-tags"> Tags: {'#'+tags.join(', #')} </p>
       </div>
@@ -41,12 +41,6 @@ export const advertType = {
   tags: T.arrayOf(T.string.isRequired),
   photo: T.string,
   createdAt: T.string.isRequired
-//   user: T.shape({ name: T.string.isRequired, username: T.string.isRequired })
-//     .isRequired,
-//   updatedAt: T.string.isRequired,
-//   content: T.string,
-//   likes: T.arrayOf(T.shape({ userId: T.string.isRequired }).isRequired)
-//     .isRequired,
  };
 
 Advert.propTypes = advertType;

@@ -109,8 +109,6 @@ const NewAdvertForm = ({onSubmit}) => {
         className="newAdvertPage-tags"
         multiple={true}
         name="tags"
-        //value={undefined} 
-        //onChange={(e) => { handleSelect(e.target.selectedOptions) }}  
         value={tags}
         onChange = {handleChange}
       >

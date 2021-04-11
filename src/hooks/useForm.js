@@ -6,7 +6,7 @@ const useForm = initialValue => {
   const handleChange = event => {
   
     if (event.target.name === 'photo') {
-      console.log('entro en handleChange photo', event.target.files[0]);
+      //console.log('entro en handleChange photo', event.target.files[0]);
       
       setValue(oldValue => ({
         ...oldValue,
@@ -14,19 +14,19 @@ const useForm = initialValue => {
       }))
     }
     else if (event.target.name === 'tags') {
-      console.log('entro en handleChange tags de use form');
+      //console.log('entro en handleChange tags de use form');
       let target = event.target;
       let name = target.name;
       let value = Array.from(target.selectedOptions, option => option.value);
       
-      console.log('valor de tags', value);
+      //console.log('valor de tags', value);
       setValue(oldValue => ({
         ...oldValue,
         [event.target.name]: value,
       }));
     }
     else {
-      console.log('entro aqui tambien');
+      //console.log('entro aqui tambien');
       setValue(oldValue => ({
         ...oldValue,
         [event.target.name]: event.target.value,
