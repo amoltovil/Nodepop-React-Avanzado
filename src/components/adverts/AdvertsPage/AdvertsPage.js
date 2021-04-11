@@ -190,7 +190,7 @@ const AdvertsPage = ({ className, ...props }) => {
         }
         return acc;
       }, []);
-      console.log(result);
+    //  console.log(result);
       return (result);
     
     }

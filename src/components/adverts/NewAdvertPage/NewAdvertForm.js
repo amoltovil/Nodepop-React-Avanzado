@@ -25,7 +25,7 @@ const NewAdvertForm = ({onSubmit}) => {
 
   
   const afterPreventDefault = ev => {
-    console.log('Evento de afterPrevent', ev);
+    //console.log('Evento de afterPrevent', ev);
     const fData = new FormData();
     fData.append("name", advert.name);
     fData.append("price", advert.price);
@@ -36,7 +36,7 @@ const NewAdvertForm = ({onSubmit}) => {
       fData.append("photo", advert.photo); 
     }
     
-    console.log('Enviando formData', fData);
+    //console.log('Enviando formData', fData);
     //onSubmit(advert);
     onSubmit(fData);
   };
