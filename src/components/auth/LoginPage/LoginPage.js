@@ -1,36 +1,27 @@
 import React from 'react';
-import T from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+//import { connect } from 'react-redux';
+//import { useLocation } from 'react-router';
 import LoginForm from './LoginForm';
-import { login } from '../../../api/auth';
 
+import {
+  loginAction,
+  resetError,
+} from '../../../store/actions';
+import { getUi } from '../../../store/selectors';
 import './LoginPage.css';
-import { useAuthContext } from '../context';
-import { useHistory, useLocation } from 'react-router';
 
+//function LoginPage({ onLogin }) { // con connect
 function LoginPage() {
-  const [error, setError] = React.useState(null);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const isLogged = React.useRef(false);
+
   const firstTime = React.useRef(true);
+  const dispatch = useDispatch();
+  const { isLoading, error } = useSelector(getUi);  // destructuring
 
-  //const resetError = React.useCallback(() => setError(), []);
-  const resetError = () => setError(null);
-  const history = useHistory();
-  const location = useLocation();
-  const { onLogin } = useAuthContext();
-
-  React.useEffect(() => {
-    if (isLogged.current) {
-      
-      onLogin();
-      const { from } = location.state || { from: { pathname: '/' } };
-      // const from = location.state ? location.state.from : {pathname: '/'}
-
-      history.replace(from);  // substituye la ruta para evitar ir hacia atras
-    }
-    
-  }, [isLogged.current]);
-
+ //const onLogin = () => dispatch(authLoginSuccess());
+ //const resetError = React.useCallback(() => setError(), []);
+ //const resetError = () => setError(null);
+  
   React.useEffect(() => {
     if (firstTime) {
       // Do things only the first time
@@ -38,32 +29,28 @@ function LoginPage() {
     }
   });
 
-  const handleSubmit = async credentials => {
-    // login(credentials).then(() => onLogin());
-    resetError();
-    setIsLoading(true);
-    try {
-      await login(credentials);
-      isLogged.current = true;
-    } catch (error) {
-      isLogged.current = false;
-      setError(error);
-    } finally {
-      setIsLoading(false);
-    }
+  const handleSubmit = credentials => {
+    dispatch(loginAction(credentials))
   };
 
   return (
     <div className="loginPage">
       <h1 className="loginPage-title">Log in to Nodepop</h1>
+      {isLoading && 'Loading...'}
       <LoginForm isLoading={isLoading} onSubmit={handleSubmit} />
       {error && (
-        <div onClick={resetError} className="loginPage-error">
+        <div onClick={()=> dispatch(resetError())} className="loginPage-error">
           {error.message}
         </div>
       )}
     </div>
   );
 }
+
+// const mapDispatchToProps = dispatch => ({
+//   onLogin: () => dispatch(authLoginSuccess()),
+// });
+
+// export default connect(null, mapDispatchToProps)(LoginPage);
 
 export default LoginPage;

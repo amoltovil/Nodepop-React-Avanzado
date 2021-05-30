@@ -8,7 +8,7 @@ import useForm from '../../../hooks/useForm';
 import './LoginForm.css';
 
 function LoginForm({ onSubmit, isLoading }) {
-  const [credentials, handleChange, handleSubmit, handleChangeCheckbox] = useForm({
+  const [credentials, handleChange, handleSubmit] = useForm({
     email: '',
     password: '',
     rememberMe: false,
@@ -69,7 +69,8 @@ function LoginForm({ onSubmit, isLoading }) {
         label="Recordar Contraseña"
         className="loginForm-checkbox"
         checked={rememberMe}
-        onChange={handleChangeCheckbox}
+        // onChange={handleChangeCheckbox}
+        onChange={ handleChange}
       />
     </form>
   );

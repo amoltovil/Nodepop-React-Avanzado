@@ -10,7 +10,7 @@ function FormField({ className, label, autofocus, ...props }) {
     if (autofocus) {
       inputRef.current.focus();
     }
-  }, []);
+  }, [autofocus]);
 
   return (
     <div

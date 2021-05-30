@@ -1,25 +1,30 @@
 import React from 'react';
+import T from 'prop-types';
 import { Button } from '../../shared';
-import { getAdvertsTags } from '../../../api/adverts';
+import { useDispatch, useSelector } from 'react-redux';
+import { tagsLoadAction } from '../../../store/actions';
+import { getTagsState } from '../../../store/selectors';
 import './FilterForm.css';
 
-const FilterForm = ({ onChange, onReset, filters}) => {
-
-    //Obtengo los tags del backend para mostrarlos en pantalla
-    const [listaTags, setListaTags] = React.useState([]);
+const FilterForm = ({ onChange, onReset, onFilter, filters }) => {
     
-    React.useEffect(() => {
-        getAdvertsTags().then(setListaTags);
-    }, []);
+    const dispatch = useDispatch();
+    // Obtengo los tags del store de redux
+    const listaTags = useSelector(getTagsState);
         
-   
+    React.useEffect(() => {
+          // despachamos la accion de carga de tags 
+          dispatch(tagsLoadAction());
+    }, []);
+      
     return (
         
         <div className="container-form-filter">
             <div className="form-filter-title"><h4>Filtros de Anuncios</h4></div>
             
             <form id="form-filter" className="form-filter"
-                 onChange={onChange}
+              //  onChange={onChange}
+              //  onSubmit={onFilter}
             >
                 <label className="form-filter-subtitle">Nombre: </label>
                 <input
@@ -57,8 +62,7 @@ const FilterForm = ({ onChange, onReset, filters}) => {
                     name="sale"
                     value={'all'}   
                     className="option-formfilter-rb"
-                    onChange={onChange}
-                            
+                    onChange={onChange}                       
                     />
                     </label>
                 </fieldset>
@@ -104,7 +108,15 @@ const FilterForm = ({ onChange, onReset, filters}) => {
                 <br />
          
                 <div className="newFilterForm-footer">
-            
+                    
+                    {/* <Button
+                        type="submit"
+                        className="filter-button"
+                        variant="primary"
+                        onClick={onFilter}
+                    >
+                        Aplicar Filtros
+                    </Button> */}
                     <Button
                         type="button"
                         className="filter-button"
@@ -122,6 +134,12 @@ const FilterForm = ({ onChange, onReset, filters}) => {
 
 FilterForm.defaultProps = {
     filters: {},
-  };
-
+};
+  
+FilterForm.propTypes = {
+  //  onFilter: T.func.isRequired,
+    onChange: T.func.isRequired,
+    onReset: T.func.isRequired,   
+};
+  
 export default FilterForm;

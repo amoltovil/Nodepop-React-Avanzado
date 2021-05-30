@@ -5,11 +5,11 @@ import './Advert.css';
 
 const Advert = ({ createdAt, photo, name, sale, price, tags}) => {
 
-  const handleLike = ev => {
-    ev.preventDefault();
-    // Manage like/unlike flow
-    //console.log(ev);
-  };
+  // const handleLike = ev => {
+  //   ev.preventDefault();
+  //   // Manage like/unlike flow
+  //   //console.log(ev);
+  // };
  
   return (
     <article className="advert bordered">
@@ -31,22 +31,28 @@ const Advert = ({ createdAt, photo, name, sale, price, tags}) => {
       </div>
     </article>
   )
-  
 };
 
-export const advertType = {
-  name: T.string.isRequired,
-  sale: T.bool.isRequired,
-  price: T.number.isRequired,
-  tags: T.arrayOf(T.string.isRequired),
-  photo: T.string,
-  createdAt: T.string.isRequired
- };
+ export const advertType = {
+   name: T.string.isRequired,
+   sale: T.bool.isRequired,
+   price: T.number.isRequired,
+   tags: T.arrayOf(T.string.isRequired),
+   photo: T.string,
+   createdAt: T.string.isRequired,
+   id: T.string.isRequired,
+  };
+
+//  export const advertType = {
+//    name: T.string,
+//    sale: T.bool,
+//    price: T.number,
+//    tags: T.arrayOf(T.string),
+//    photo: T.string,
+//    createdAt: T.string,
+//    id: T.string,
+//  };
 
 Advert.propTypes = advertType;
-
-// Advert.defaultProps = {
-//   content: 'Nothing here!',
-// };
 
 export default Advert;

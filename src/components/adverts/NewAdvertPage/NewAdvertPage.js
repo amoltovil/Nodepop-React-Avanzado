@@ -1,21 +1,29 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+
 import './NewAdvertPage.css';
 import Layout from '../../layout/Layout';
 import NewAdvertForm from './NewAdvertForm';
-import { createAdvert } from '../../../api/adverts';
-import { Redirect } from 'react-router-dom';
+//import { createAdvert } from '../../../api/adverts';
+import { advertCreateAction } from '../../../store/actions';
+import { getUi } from '../../../store/selectors';
 
 const NewAdvertPage = props => {
-  const [error, setError] = React.useState(null);
+  //const [error, setError] = React.useState(null);
   const [createdAdvert, setCreatedAdvert] = React.useState(null);
 
+  const dispatch = useDispatch();
+  const { error } = useSelector(getUi);  
+
   const handleSubmit = async newAdvert => {
-    try {
-      const advert = await createAdvert(newAdvert);
-      setCreatedAdvert(advert);
-    } catch (error) {
-      setError(true);
-    }
+    // dispara la acción para introducir el anuncio en redux  
+    //  const advert = await createAdvert(newAdvert);
+    //dispatch(advertsCreated(advert));
+    //dispatch(advertCreateAction(newAdvert)).then(advert => setCreatedAdvert(advert));
+    const advert = await dispatch(advertCreateAction(newAdvert));
+    setCreatedAdvert(advert);
+    
   };
 
   if (error && error.status === 401) {

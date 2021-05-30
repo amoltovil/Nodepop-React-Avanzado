@@ -1,22 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import T from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import classnames from 'classnames';
-import { getAdverts } from '../../../api/adverts';
 import scopedStyles from './AdvertsPage.module.css';
 import Layout from '../../layout/Layout';
 import AdvertsList from './AdvertsList';
-import FilterForm  from './FilterForm';
-import { Button } from '../../shared';
+import FilterForm from './FilterForm';
+import EmptyList from './EmptyList';
 import './AdvertsPage.css';
-
-const EmptyList = () => (
-  <div style={{ textAlign: 'center' }}>
-    <p>Listado de Anuncios Vacio</p>
-    <Button as={Link} to="/advert/new" variant="primary">
-      Crear Anuncio
-    </Button>
-  </div>
-);
+import { getAdvertsStateSort, getUi } from '../../../store/selectors';
+import { advertsLoadAction } from '../../../store/actions';
 
 const initialState = {
     name: '',
@@ -26,191 +19,157 @@ const initialState = {
     tags: [],
 };
 
-const AdvertsPage = ({ className, ...props }) => {
-  const [adverts, setAdverts] = React.useState([]);
+const AdvertsPage = ({ className, ...props }) => {  
+  const dispatch = useDispatch();
+  const adverts = useSelector(getAdvertsStateSort);
+  const { isLoading } = useSelector(getUi);
+
   const [filters, setFilters] = React.useState({
     name: '',
     pricemin: '',
     pricemax: '',
-    sale: null, 
+    sale: null,
     tags: [],
-    
   });
+
+  React.useEffect(() => {
+    
+    const filterInicial = ''; //traemos todos los anuncios del backend en el 1er render
+    dispatch(advertsLoadAction(filterInicial)); // llamamos a la accion de cargar anuncios
+
+  }, []);
 
   const clearFilters = () => {
     setFilters({ ...initialState });
-}
+  }
   
   const handleReset = ev => {
     clearFilters();
   }
   
+  // const handleFilter = ev => {
+  //   ev.preventDefault();
+  //   console.log(filters);
+  //   filterAdverts(adverts, filters);
+  // }
+   
   // Función que recoje los inputs del Formulario de los filtros
   // y los prepara para realizar el filtro correctamente
+
   const handleChange = ev => {
-    if (ev.target.name !== 'tags' && ev.target.name === 'name') {
-      
-      setFilters({
-        ...filters,
-        [ev.target.name]: ev.target.value
-      });
-    }
-    else if (ev.target.name === 'tags') {
-      
-      let target = ev.target;
-      let name = target.name;
-      let value = Array.from(target.selectedOptions, option => option.value);
-      setFilters({
-        ...filters,
-        [ev.target.name]: value
-      })
-    }
-    else if (ev.target.name !== 'tags' &&
-      (ev.target.name === 'pricemin' || ev.target.name === 'pricemax')) {
-      if (ev.target.value !== '') {
-        setFilters({
-          ...filters,
-          [ev.target.name]: parseInt(ev.target.value, 10)
-        });
-      }
-      else {  // para evitar el NaN al eliminar el texto de los inputs de precio
-        setFilters({
-          ...filters,
-          [ev.target.name]: ev.target.value
-        });
-      }
-    }
-    else if (ev.target.name !== 'tags' && ev.target.name === 'sale') {
-      let vsale = ev.target.value;
-     
-      if (vsale !== 'all' && vsale === 'true') {
-     
-        setFilters({
-          ...filters,
-          [ev.target.name]: Boolean(ev.target.value)
-        });
-      } else if (vsale !== 'all' && vsale === 'false'){
-     
-        setFilters({
-          ...filters,
-          [ev.target.name]: !Boolean(ev.target.value)
-        });
-      } else if (vsale === 'all') {
-        
-         setFilters({
-           ...filters,
-           [ev.target.name]: null
-         });
-      }
-    }
-  };
-
-  React.useEffect(() => {
-    
-    const filterInicial = ''; //traemos todos los anuncios del backend en el 1er render
-    getAdverts(filterInicial).then(setAdverts);
-    
-  }, []);
-
-  // Función que filtra por cada campo por separado y luego concatena los resultados.
-  // al final hago un reduce para evitar registros duplicados
-  const applyFilters = () => {
-    
-    let advertsByName = [];
-    let advertsByPrice = [];
-    let advertsByTags = [];
-    let advertsBySale = [];
-    let advertsResults = [];
-    
-    if (filters.name === '' && filters.pricemin === '' && filters.pricemax === '' && filters.sale === null
-      && (filters.tags.length === 0 || filters.tags[0]==='')) {
-      
-      return adverts;
-    }
-    else {
-      
-      if (filters.name !== '') {
-        advertsByName = adverts.filter(advert => {
-          return (advert.name === filters.name);
-        })
-      }
-     
-      if ((filters.pricemin !== '' && filters.pricemin !== undefined)
-         && (filters.pricemax !== '' && filters.pricemax !== undefined)) {
-       
-        advertsByPrice = adverts.filter(advert => {
-          return (advert.price >= filters.pricemin && advert.price <= filters.pricemax);
-        });
-      }
-      else if ((filters.pricemin !== '') &&
-        (filters.pricemax === '' || filters.pricemax === null || filters.pricemax === undefined)) {
-         
-        advertsByPrice = adverts.filter(advert => {
-          return (advert.price >= filters.pricemin);
-        });
-      }
-      else if ((filters.pricemax !== '') &&
-        (filters.pricemin === '' || filters.pricemin === null || filters.pricemin === undefined)) {
-        
-        advertsByPrice = adverts.filter(advert => {
-          return (advert.price <= filters.pricemax);
-        });
-      } 
-          
-      if (filters.tags.length > 0) {
-        advertsByTags = adverts.filter(advert => {
-          //return (someEquals(advert.tags, filters.tags));
-          return (advert.tags.some((r)=>filters.tags.indexOf(r)>=0))
-        });
-      }
-      
-      if (filters.sale !== null) {
-        advertsBySale = adverts.filter(advert => {
-          return (advert.sale === filters.sale);
-        })
-      }
-     
-      if (advertsByName.length > 0) {
-        advertsResults = advertsResults.concat(advertsByName);
-      }
-      if (advertsByPrice.length > 0) {
-        advertsResults = advertsResults.concat(advertsByPrice);
-      }
-      if (advertsByTags.length > 0) {
-        advertsResults = advertsResults.concat(advertsByTags);
-      }
-      if (advertsBySale.length > 0) {
-        advertsResults = advertsResults.concat(advertsBySale);
-      }
-      
-      // Eliminamos anuncios duplicados 
-      const result = advertsResults.reduce((acc, item) => {
-        if (!acc.includes(item)) {
-          acc.push(item);
+    let value;
+    switch (ev.target.name) {
+      case 'name':
+        value = ev.target.value;
+        break;
+      case 'tags':
+        value = Array.from(ev.target.selectedOptions, option => option.value);
+        break;
+      case 'pricemin':
+      case 'pricemax':
+        if (ev.target.value !== '') {
+          value = parseInt(ev.target.value, 10);
         }
-        return acc;
-      }, []);
-    //  console.log(result);
-      return (result);
-    
+        else {
+          value = ev.target.value;
+        }
+        break;
+      case 'sale':
+      // console.log('sale', ev.target.value)
+        if (ev.target.value === 'true') {
+          value = Boolean(ev.target.value);
+        }
+        if (ev.target.value === 'false') {
+          value = !Boolean(ev.target.value);
+        }
+        if (ev.target.value === 'all') {
+          value = null;
+        }
+        break;
+        
+      default:
+        value = ev.target.value;
+        break;
     }
+  
+   setFilters({
+    ...filters,
+    [ev.target.name]: value, 
+  })
+  }
+
+  const filterByName = filter => ({ name }) => {
+    const nameFilter = filter.trim();
+    return !nameFilter || new RegExp(nameFilter, 'gi').test(name);
   };
 
+  const filterByPrice = filter => ({ price }) => {
+    if (!filter.pricemin && !filter.pricemax) {
+       return true;
+    }
+    
+    if (!filter.pricemax) {
+      return price >= filter.pricemin;
+    }
+    
+    return price >= filter.pricemin && price <= filter.pricemax;
+  };
+
+  
+  const filterBySale = filter => ({ sale }) => {
+    //console.log('sale', sale);
+    if (filter === null) {
+      return true;
+    }
+    return filter === sale;
+  };
+
+  const filterByTags = filter => ({ tags }) =>
+    !filter.length || filter.every(tag => tags.includes(tag));
+
+  const filterAdverts = (adverts, { name, pricemin, pricemax, sale, tags }) => {
+    
+    const applyFilters = (...filters) =>
+      adverts.filter(advert => filters.every(filter => filter(advert)));
+    
+    return applyFilters(
+      filterByName(name),
+      filterByPrice({ pricemin, pricemax }),
+      filterBySale(sale),
+      filterByTags(tags)
+    );
+  };
+  
+
+  const filteredAdverts = filterAdverts(adverts, filters);
+  
   return (
     <Layout title="Listado de Anuncios" {...props} >
+      {adverts.length > 0 && (
       <FilterForm
-        filters={filters}
-        onChange={handleChange}
-        onReset={handleReset}
-      
+          filters={filters}
+          onChange={handleChange}
+          onReset={handleReset}
+          //onFilter={handleFilter}
+          
         />
+      )}
+       {isLoading && 'Loading Adverts ...'}
       <div className={classnames(scopedStyles.advertsPage, className)}>
         
-        {adverts.length ? <AdvertsList adverts={applyFilters(adverts)} /> : <EmptyList />}
+       {/* { adverts.length ? <AdvertsList adverts={applyFilters(adverts)} /> : <EmptyList />}  */}
+        {filteredAdverts.length ?
+          <AdvertsList adverts={filteredAdverts} />
+          :
+          <EmptyList advertsCount={adverts.length}/>}
       </div>
       
     </Layout>
   );
+};
+
+AdvertsPage.propTypes = {
+  className: T.string,
 };
 
 export default AdvertsPage;

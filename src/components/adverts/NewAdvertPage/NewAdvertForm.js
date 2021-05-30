@@ -1,9 +1,12 @@
 import React from 'react';
-import T, { string } from 'prop-types';
+import T from 'prop-types';
 import useForm from '../../../hooks/useForm';
 //import FormField from '../../shared/FormField';
 import { Button } from '../../shared';
-import { getAdvertsTags } from '../../../api/adverts';
+//import { getAdvertsTags } from '../../../api/adverts';
+import { useDispatch, useSelector } from 'react-redux';
+import { tagsLoadAction } from '../../../store/actions';
+import { getTagsState } from '../../../store/selectors';
 
 const NewAdvertForm = ({onSubmit}) => {
 
@@ -16,14 +19,19 @@ const NewAdvertForm = ({onSubmit}) => {
       photo: null, 
     });
   
+  const dispatch = useDispatch();
+  // Obtengo los tags del store de redux
+  const listaTags = useSelector(getTagsState);
+
   // Obtengo los tags del backend para pintarlos en el select multiple 
-  const [listaTags, setListaTags] = React.useState([]);
+  //const [listaTags, setListaTags] = React.useState([]);
   
   React.useEffect(() => {
-      getAdvertsTags().then(setListaTags);
+  //    getAdvertsTags().then(setListaTags);
+    // despachamos la accion de carga de tags 
+    dispatch(tagsLoadAction());
   }, []);
 
-  
   const afterPreventDefault = ev => {
     //console.log('Evento de afterPrevent', ev);
     const fData = new FormData();
@@ -61,7 +69,7 @@ const NewAdvertForm = ({onSubmit}) => {
         placeholder="Introduzca aquí su anuncio.."
         value={name}
         onChange={handleChange}
-        autofocus
+        //autofocus
       />
       <label className="newAdvertPage-label">Precio <
         span className="newAdvertPage-required">*** Campo obligatorio ***</span>
@@ -133,8 +141,7 @@ const NewAdvertForm = ({onSubmit}) => {
           accept="image/*"
           name="photo"
           onChange={handleChange} />
-        
-      
+  
         <br />
       <div className="newAdvertPage-footer">
         
@@ -153,11 +160,23 @@ const NewAdvertForm = ({onSubmit}) => {
   );
 };
 
+// NewAdvertForm.propTypes = {
+//   name: T.string.isRequired,
+//   price: T.number.isRequired,
+//   tags: T.arrayOf(T.string).isRequired,
+//   sale: T.bool.isRequired,
+// };
+
+// NewAdvertForm.propTypes = {
+//   name: T.string,
+//   price: T.number,
+//   tags: T.arrayOf(T.string),
+//   sale: T.bool,
+// };
+
+
 NewAdvertForm.propTypes = {
-  name: T.string.isRequired,
-  price: T.number.isRequired,
-  tags: T.arrayOf(T.string).isRequired,
-  sale: T.bool.isRequired,
+  onSubmit: T.func.isRequired,
 };
 
 export default NewAdvertForm;

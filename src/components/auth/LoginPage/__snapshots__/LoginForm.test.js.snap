@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginForm snapshot testing 1`] = `
+<form
+  className="loginForm"
+  onSubmit={[Function]}
+>
+  <FormField
+    autofocus={true}
+    className="loginForm-field"
+    label="Introduzca su email"
+    name="email"
+    onChange={[Function]}
+    type="text"
+    value=""
+  />
+  <FormField
+    className="loginForm-field"
+    label="password"
+    name="password"
+    onChange={[Function]}
+    type="password"
+    value=""
+  />
+  <styled.button
+    className="loginForm-submit"
+    disabled={true}
+    type="submit"
+    variant="primary"
+  >
+    Log in
+  </styled.button>
+  <br />
+   
+  <br />
+  <FormField
+    checked={false}
+    className="loginForm-checkbox"
+    label="Recordar Contraseña"
+    name="rememberMe"
+    onChange={[Function]}
+    type="checkbox"
+  />
+</form>
+`;
+
+exports[`LoginForm snapshot testing with an email and password 1`] = `
+<form
+  className="loginForm"
+  onSubmit={[Function]}
+>
+  <FormField
+    autofocus={true}
+    className="loginForm-field"
+    label="Introduzca su email"
+    name="email"
+    onChange={[Function]}
+    type="text"
+    value="Alicia"
+  />
+  <FormField
+    className="loginForm-field"
+    label="password"
+    name="password"
+    onChange={[Function]}
+    type="password"
+    value="password"
+  />
+  <styled.button
+    className="loginForm-submit"
+    disabled={false}
+    type="submit"
+    variant="primary"
+  >
+    Log in
+  </styled.button>
+  <br />
+   
+  <br />
+  <FormField
+    checked={false}
+    className="loginForm-checkbox"
+    label="Recordar Contraseña"
+    name="rememberMe"
+    onChange={[Function]}
+    type="checkbox"
+  />
+</form>
+`;
+
+exports[`LoginForm snapshot testing with is loading 1`] = `
+<form
+  className="loginForm"
+  onSubmit={[Function]}
+>
+  <FormField
+    autofocus={true}
+    className="loginForm-field"
+    label="Introduzca su email"
+    name="email"
+    onChange={[Function]}
+    type="text"
+    value=""
+  />
+  <FormField
+    className="loginForm-field"
+    label="password"
+    name="password"
+    onChange={[Function]}
+    type="password"
+    value=""
+  />
+  <styled.button
+    className="loginForm-submit"
+    disabled={true}
+    type="submit"
+    variant="primary"
+  >
+    Log in
+  </styled.button>
+  <br />
+   
+  <br />
+  <FormField
+    checked={false}
+    className="loginForm-checkbox"
+    label="Recordar Contraseña"
+    name="rememberMe"
+    onChange={[Function]}
+    type="checkbox"
+  />
+</form>
+`;
