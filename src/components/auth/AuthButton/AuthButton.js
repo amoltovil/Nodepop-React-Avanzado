@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { getIsLogged } from '../../../store/selectors';
 import { authLogout } from '../../../store/actions';
 
-const AuthButton = ({ className, isLogged, onLogout}) => {
+export const AuthButton = ({ className, isLogged, onLogout}) => {
   
   // const handleLogoutClick = () => {
   //   // Confirmación de logout  (anterior)

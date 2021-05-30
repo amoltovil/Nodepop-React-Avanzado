@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AuthButton snapshot testing 1`] = `
+<Fragment>
+  <styled.button
+    className=""
+    confirmation={null}
+    isLogged={true}
+    onClick={[Function]}
+    onLogout={[MockFunction]}
+  />
+</Fragment>
+`;
